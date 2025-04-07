@@ -4,6 +4,8 @@ import SideBar from "./Components/SideBar";
 import Category from "./Pages/Category/Category";
 import { BrowserRouter, Routes, Route } from "react-router";
 import AddCategory from "./Pages/Category/AddCategory";
+import Slider from "./Pages/Slider/Slider";
+import CreateSlider from "./Pages/Slider/CreateSlider";
 
 function App() {
   return (
@@ -15,13 +17,14 @@ function App() {
         {/* Header */}
         <Header />
         {/* Main Content Area */}
-        
-          <Routes>
-            <Route path="/" element={<div>hi</div>} />
-            <Route path="/category" element={<Category />} />
-            <Route path="/category/add" element={<AddCategory />} />
-          </Routes>
-      
+
+        <Routes>
+          <Route path="/" element={<div>hi</div>} />
+          <Route path="/slider" element={<Slider />} />
+          <Route path="/slider/add" element={<CreateSlider />} />
+          <Route path="/category" element={<Category />} />
+          <Route path="/category/add" element={<AddCategory />} />
+        </Routes>
       </div>
     </div>
   );
