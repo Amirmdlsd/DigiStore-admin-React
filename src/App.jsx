@@ -8,6 +8,7 @@ import Slider from "./Pages/Slider/Slider";
 import CreateSlider from "./Pages/Slider/CreateSlider";
 import Product from "./Pages/Product/Product";
 import AddProduct from "./Pages/Product/AddProduct";
+import CreateGallery from "./Pages/Product/CreateGallery";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/category/add" element={<AddCategory />} />
           <Route path="/product" element={<Product />} />
           <Route path="/product/add" element={<AddProduct />} />
+          <Route path="/product/:id/addGallery" element={<CreateGallery />} />
         </Routes>
       </div>
     </div>

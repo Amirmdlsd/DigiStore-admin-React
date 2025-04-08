@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../axios/axiosInstance";
-import { Link } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 
 function Product() {
   const productHeader = [
@@ -10,21 +10,25 @@ function Product() {
     "عکس",
     "دسته بندی ",
     "تعداد",
-    "اسپشیال","عملیات"
+    "اسپشیال",
+    "عملیات",
   ];
   const [products, setProducts] = useState([]);
+  const [totlaPage, setTotalPage] = useState();
+  const navigate = useNavigate();
   const handleSetProducts = async () => {
     try {
       const data = await axiosInstance.get("/product");
-      setProducts(data.data.data);
-      console.log(data.data.data)
+      setProducts(data.data.data.data);
+      setTotalPage(data.data.data.totalPages);
+      console.log(totlaPage,data.data.data.totalPages);
     } catch (error) {
-      console.error(error)
+      console.error(error);
       throw new Error(error);
     }
   };
   useEffect(() => {
-    handleSetProducts()
+    handleSetProducts();
   }, []);
 
   return (
@@ -55,30 +59,35 @@ function Product() {
           </tr>
         </thead>
         <tbody>
-          {products.map((d) => {
+          {products.map((product) => {
             return (
               <tr className="bg-white border-b hover:bg-gray-50 text-center">
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                  {d.title}
+                  {product.title}
                 </td>
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                  {d.price}
+                  {product.price}
                 </td>
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                  {d.discount}
+                  {product.discount}
                 </td>
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                  {d.image}
+                  {product.image}
                 </td>
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                  {d.title}
+                  {product.title}
                 </td>
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                  {d.quantity}
+                  {product.quantity}
                 </td>
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                  {d.is_special?<p className="text-green-600 bg-green-300">بله</p>:
-                  <span className="text-red-600 bg-red-300 rounded-3xl text-sm px-2 py-2">خیر</span>}
+                  {product.is_special ? (
+                    <p className="text-green-600 bg-green-300">بله</p>
+                  ) : (
+                    <span className="text-red-600 bg-red-300 rounded-3xl text-sm px-2 py-2">
+                      خیر
+                    </span>
+                  )}
                 </td>
                 <td className="py-4 px-6">
                   <button className="font-medium text-blue-600 mr-3 rounded-md bg-blue-300 px-3 py-2 inline-block hover:bg-blue-400 transition-colors">
@@ -86,6 +95,15 @@ function Product() {
                   </button>
                   <button className="font-medium text-red-600 bg-red-300 px-3 py-2 rounded-md inline-block hover:bg-red-400 transition-colors">
                     حذف
+                  </button>
+                  <button
+                    className="font-medium text-black bg-gray-300 px-3 py-2 rounded-md
+                   inline-block hover:bg-gray-400 transition-colors"
+                    onClick={() =>
+                      navigate(`/product/${product.id}/addGallery`)
+                    }
+                  >
+                    ایجاد عکس
                   </button>
                 </td>
               </tr>

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../axios/axiosInstance";
 import { useNavigate } from "react-router";
-import { preconnect } from "react-dom";
-import axios from "axios";
 
 function AddProduct() {
   const navigate = useNavigate();
@@ -25,6 +23,7 @@ function AddProduct() {
       setCategory(data.data.data);
     } catch (error) {
       setError({ status: true, message: "خطایی رخ داده است!" });
+      throw new Error(error);
     }
   };
 
@@ -52,7 +51,7 @@ function AddProduct() {
       formData.append("price", product.price);
       console.log(typeof formData.get("category_id"));
       const data = await axiosInstance.post("/product", formData);
-      setSuccess({ status: true, message: data.data.message});
+      setSuccess({ status: true, message: data.data.message });
       setProduct({
         title: "",
         description: "",
@@ -62,7 +61,7 @@ function AddProduct() {
         image: "",
         category_id: null,
       });
-      setTimeout(()=>navigate("/product"),)
+      setTimeout(() => navigate("/product"));
     } catch (error) {
       setError({
         status: true,
