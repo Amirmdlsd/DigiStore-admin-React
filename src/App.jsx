@@ -2,10 +2,12 @@ import React from "react";
 import Header from "./Components/Header";
 import SideBar from "./Components/SideBar";
 import Category from "./Pages/Category/Category";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { Routes, Route } from "react-router";
 import AddCategory from "./Pages/Category/AddCategory";
 import Slider from "./Pages/Slider/Slider";
 import CreateSlider from "./Pages/Slider/CreateSlider";
+import Product from "./Pages/Product/Product";
+import AddProduct from "./Pages/Product/AddProduct";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route path="/slider/add" element={<CreateSlider />} />
           <Route path="/category" element={<Category />} />
           <Route path="/category/add" element={<AddCategory />} />
+          <Route path="/product" element={<Product />} />
+          <Route path="/product/add" element={<AddProduct />} />
         </Routes>
       </div>
     </div>

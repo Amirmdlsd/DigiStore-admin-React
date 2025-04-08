@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import axiosInstance from "../../axios/axiosInstance";
 function Slider() {
-  const sliderHeader = ["لینک", "عکس"];
+  const sliderHeader = ["لینک", "عکس", "عملیات"];
   const [data, setData] = useState([]);
   const handleSetData = async () => {
     try {
       const sliders = await axiosInstance.get("/sliders");
+      setData(sliders.data.data);
       setData(sliders.data.data);
     } catch (error) {
       throw Error(error.message);
@@ -50,8 +51,11 @@ function Slider() {
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                   {d.url}
                 </td>
-                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                  {d.image}
+                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap text-center">
+                  <img
+                    className="w-23 bg-red-300 h-23 text-center"
+                    src={d.image}
+                  />
                 </td>
 
                 <td className="py-4 px-6">
