@@ -6,6 +6,7 @@ function SideBar() {
     { name: "اسلایدر", to: "/slider" },
     { name: "دسته بندی", to: "/category" },
     { name: "محصولات", to: "/product" },
+    { name: "کامنت ها", to: "/commetns" },
   ];
   return (
     <div className="w-64 bg-white shadow-lg">

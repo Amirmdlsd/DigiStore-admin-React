@@ -74,7 +74,7 @@ function AddProduct() {
 
   return (
     <>
-      <div className="flex justify-between w-[980px] items-center mx-auto mt-10">
+      <div className="flex justify-between w-[980px] items-center mx-auto mt-10 mb-12">
         <h1 className="text-xl font-bold">ایجاد محصول</h1>
         <button
           className="flex items-center bg-gray-100 border px-3 py-1 rounded-2xl hover:bg-blue-200 hover:text-white"

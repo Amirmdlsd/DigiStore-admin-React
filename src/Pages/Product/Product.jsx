@@ -19,9 +19,9 @@ function Product() {
   const handleSetProducts = async () => {
     try {
       const data = await axiosInstance.get("/product");
-      setProducts(data.data.data.data);
+      setProducts(data.data.data.result);
       setTotalPage(data.data.data.totalPages);
-      console.log(totlaPage,data.data.data.totalPages);
+      console.log(data.data);
     } catch (error) {
       console.error(error);
       throw new Error(error);
@@ -90,20 +90,28 @@ function Product() {
                   )}
                 </td>
                 <td className="py-4 px-6">
-                  <button className="font-medium text-blue-600 mr-3 rounded-md bg-blue-300 px-3 py-2 inline-block hover:bg-blue-400 transition-colors">
+                  <button
+                      className="font-medium text-blue-600 mr-3 rounded-md bg-blue-300 px-3 py-2 inline-block hover:bg-blue-400 transition-colors">
                     ویرایش
                   </button>
-                  <button className="font-medium text-red-600 bg-red-300 px-3 py-2 rounded-md inline-block hover:bg-red-400 transition-colors">
+                  <button
+                      className="font-medium text-red-600 bg-red-300 px-3 py-2 rounded-md inline-block hover:bg-red-400 transition-colors">
                     حذف
                   </button>
                   <button
-                    className="font-medium text-black bg-gray-300 px-3 py-2 rounded-md
+                      className="font-medium text-black bg-gray-300 px-3 py-2 rounded-md
                    inline-block hover:bg-gray-400 transition-colors"
-                    onClick={() =>
-                      navigate(`/product/${product.id}/addGallery`)
-                    }
+                      onClick={() =>
+                          navigate(`/product/${product.id}/addGallery`)
+                      }
                   >
                     ایجاد عکس
+                  </button>
+                  <button
+                      onClick={() =>navigate(`/product/${product.id}/addColor`)}
+                      className="font-medium text-green-600 bg-green-300
+                      px-3 py-2 rounded-md inline-block hover:bg-green-400 transition-colors">
+                   افزودن رنگ
                   </button>
                 </td>
               </tr>

@@ -9,6 +9,8 @@ import CreateSlider from "./Pages/Slider/CreateSlider";
 import Product from "./Pages/Product/Product";
 import AddProduct from "./Pages/Product/AddProduct";
 import CreateGallery from "./Pages/Product/CreateGallery";
+import AddColor from "./Pages/Product/AddColor.jsx";
+import Comment from "./Pages/Comments/Comment.jsx";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
           <Route path="/product" element={<Product />} />
           <Route path="/product/add" element={<AddProduct />} />
           <Route path="/product/:id/addGallery" element={<CreateGallery />} />
+          <Route path="/product/:id/addColor" element={<AddColor />} />
+          <Route path="/commetns" element={<Comment />} />
         </Routes>
       </div>
     </div>
