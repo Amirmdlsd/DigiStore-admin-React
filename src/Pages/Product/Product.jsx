@@ -71,8 +71,8 @@ function Product() {
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                   {product.discount}
                 </td>
-                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                  {product.image}
+                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap w-54 h-44">
+                  <img src={product.image}/>
                 </td>
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                   {product.title}

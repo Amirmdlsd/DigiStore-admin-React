@@ -28,7 +28,9 @@ const Category = () => {
           className="border-2 border-indigo-500 text-indigo-500 rounded-lg px-4 py-2 mb-10 
         hover:bg-indigo-500 hover:text-white transition-all duration-300 "
         >
-          <span className="no-underline text-black list-none ">افزودن دسته بندی</span>
+          <span className="no-underline text-black list-none ">
+            افزودن دسته بندی
+          </span>
         </Link>
       </div>
       {/* table */}
@@ -51,7 +53,9 @@ const Category = () => {
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                   {d.title}
                 </td>
-                <td className="py-4 px-6">Laptop</td>
+                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap w-54 h-44">
+                  <img src={d.image} />
+                </td>
 
                 <td className="py-4 px-6">
                   <button className="font-medium text-blue-600 mr-3 rounded-md bg-blue-300 px-3 py-2 inline-block hover:bg-blue-400 transition-colors">

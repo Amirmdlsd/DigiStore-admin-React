@@ -9,6 +9,7 @@ function Slider() {
       const sliders = await axiosInstance.get("/sliders");
       setData(sliders.data.data);
       setData(sliders.data.data);
+      console.log(sliders.data.data);
     } catch (error) {
       throw Error(error.message);
     }
@@ -16,7 +17,7 @@ function Slider() {
 
   useEffect(() => {
     handleSetData();
-  });
+  }, []);
   return (
     <div className="overflow-x-auto relative shadow-md sm:rounded-lg mt-10 mx-10 text-center">
       {/* add */}
@@ -51,11 +52,8 @@ function Slider() {
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                   {d.url}
                 </td>
-                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap text-center">
-                  <img
-                    className="w-23 bg-red-300 h-23 text-center"
-                    src={d.image}
-                  />
+                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap w-54 h-44">
+                  <img src={d.image} />
                 </td>
 
                 <td className="py-4 px-6">

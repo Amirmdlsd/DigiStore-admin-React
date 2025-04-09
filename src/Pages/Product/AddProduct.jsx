@@ -49,19 +49,11 @@ function AddProduct() {
       formData.append("quantity", product.quantity);
       formData.append("discount", product.discount);
       formData.append("price", product.price);
-      console.log(typeof formData.get("category_id"));
+      console.log(formData.get("image"));
       const data = await axiosInstance.post("/product", formData);
       setSuccess({ status: true, message: data.data.message });
-      setProduct({
-        title: "",
-        description: "",
-        price: "",
-        quantity: "",
-        discount: "",
-        image: "",
-        category_id: null,
-      });
-      setTimeout(() => navigate("/product"));
+      // setTimeout(() => navigate("/product"), 2000);
+
     } catch (error) {
       setError({
         status: true,
