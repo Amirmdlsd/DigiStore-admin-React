@@ -39,6 +39,7 @@ function App() {
           <Route path="/commetns" element={<Comment />} />
           <Route path="/brands" element={<Brand />} />
           <Route path="/brand/create" element={<CreateBrand />} />
+          <Route path="/brand/:id" element={<CreateBrand />} />
         </Routes>
       </div>
     </div>

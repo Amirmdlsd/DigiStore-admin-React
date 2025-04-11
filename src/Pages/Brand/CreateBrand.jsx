@@ -36,15 +36,11 @@ function CreateBrand() {
     try {
       const formData = new FormData();
       formData.append("name", brand.name);
-      formData.append("image", brand.file); // 👈 Must match FileInterceptor('image')
-
-      const response = await axiosInstance.post("brand", formData);
-      console.log(formData.get("name"), formData.get("image"));
-      console.log(response.data);
-
+      formData.append("image", brand.file);
+      await axiosInstance.post("/brand", formData);
       setSuccess(true);
       setBrand({ name: "", file: null });
-      //  setTimeout(() => navigate(-1), 1500);
+      setTimeout(() => navigate(-1), 1500);
     } catch (err) {
       console.error(err);
       setError("خطا در ارسال اطلاعات");
@@ -129,9 +125,7 @@ function CreateBrand() {
           </label>
           <input
             onChange={(event) => {
-              console.log(event.target.files[0]);
               setBrand((pre) => ({ ...pre, file: event.target.files[0] }));
-              console.log(brand);
             }}
             name="image"
             type="file"

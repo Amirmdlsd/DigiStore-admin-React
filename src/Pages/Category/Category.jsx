@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import axiosInstance from "../../axios/axiosInstance";
+import Pagination from "../../Components/Pagination";
 
 const Category = () => {
   const tableData = {
     header: ["نام", "عکس", "عملیات"],
   };
   const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPage, setTotalPage] = useState(1);
   const handleGetData = async () => {
     try {
       const res = await axiosInstance.get("category");
-      console.log(res.data.data);
-      setData(res.data.data);
+      console.log(res.data.data.data);
+      setData(res.data.data.data);
+      setTotalPage(res.data.data.totlaPages);
     } catch (error) {
       throw new Error(error);
     }
@@ -73,6 +77,11 @@ const Category = () => {
           })}
         </tbody>
       </table>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPage}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
     </div>
   );
 };
