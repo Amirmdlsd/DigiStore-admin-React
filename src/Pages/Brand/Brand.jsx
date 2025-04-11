@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import axiosInstance from "../../axios/axiosInstance";
 
-const Category = () => {
+const Brand = () => {
   const tableData = {
     header: ["نام", "عکس", "عملیات"],
   };
   const [data, setData] = useState([]);
   const handleGetData = async () => {
     try {
-      const res = await axiosInstance.get("category");
+      const res = await axiosInstance.get("slider");
       console.log(res.data.data);
       setData(res.data.data);
     } catch (error) {
@@ -24,12 +24,12 @@ const Category = () => {
       {/* add */}
       <div className="flex items-start mr-10 ">
         <Link
-          to="/category/add"
+          to="/brand/create"
           className="border-2 border-indigo-500 text-indigo-500 rounded-lg px-4 py-2 mb-10 
         hover:bg-indigo-500 hover:text-white transition-all duration-300 "
         >
           <span className="no-underline text-black list-none ">
-            افزودن دسته بندی
+            افزودن برند
           </span>
         </Link>
       </div>
@@ -77,4 +77,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Brand;

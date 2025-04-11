@@ -48,6 +48,7 @@ function CreateSlider() {
         const formData = new FormData();
         formData.append("url", slider.url);
         formData.append("image", slider.image);
+        console.log(formData.get("url"), formData.get("image"));
         const result = await axiosInstance.post("/sliders", formData);
         setStatus({
           status: false,

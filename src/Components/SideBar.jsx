@@ -5,6 +5,7 @@ function SideBar() {
   const acordionItem = [
     { name: "اسلایدر", to: "/slider" },
     { name: "دسته بندی", to: "/category" },
+    { name: "برند", to: "/brands" },
     { name: "محصولات", to: "/product" },
     { name: "کامنت ها", to: "/commetns" },
   ];

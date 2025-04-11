@@ -11,6 +11,8 @@ import AddProduct from "./Pages/Product/AddProduct";
 import CreateGallery from "./Pages/Product/CreateGallery";
 import AddColor from "./Pages/Product/AddColor.jsx";
 import Comment from "./Pages/Comments/Comment.jsx";
+import Brand from "./Pages/Brand/Brand.jsx";
+import CreateBrand from "./Pages/Brand/CreateBrand.jsx";
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
           <Route path="/product/:id/addGallery" element={<CreateGallery />} />
           <Route path="/product/:id/addColor" element={<AddColor />} />
           <Route path="/commetns" element={<Comment />} />
+          <Route path="/brands" element={<Brand />} />
+          <Route path="/brand/create" element={<CreateBrand />} />
         </Routes>
       </div>
     </div>
