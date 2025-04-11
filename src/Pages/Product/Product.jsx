@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../axios/axiosInstance";
 import { Link, Navigate, useNavigate } from "react-router";
+import DeleteAlert from "../../Components/Alert";
 
 function Product() {
   const productHeader = [
@@ -26,6 +27,20 @@ function Product() {
       console.error(error);
       throw new Error(error);
     }
+  };
+
+  const handleDeleteProduct = async (id) => {
+    DeleteAlert({
+      title: "ایا میخواهید محصول را حذف کنید؟",
+      func: async () => {
+        try {
+          await axiosInstance.delete(`product/${id}`);
+          handleSetProducts();
+        } catch (error) {
+          throw new Error(error);
+        }
+      },
+    });
   };
   useEffect(() => {
     handleSetProducts();
@@ -72,7 +87,7 @@ function Product() {
                   {product.discount}
                 </td>
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap w-54 h-44">
-                  <img src={product.image}/>
+                  <img src={product.image} />
                 </td>
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                   {product.title}
@@ -90,28 +105,30 @@ function Product() {
                   )}
                 </td>
                 <td className="py-4 px-6">
-                  <button
-                      className="font-medium text-blue-600 mr-3 rounded-md bg-blue-300 px-3 py-2 inline-block hover:bg-blue-400 transition-colors">
+                  <button className="font-medium text-blue-600 mr-3 rounded-md bg-blue-300 px-3 py-2 inline-block hover:bg-blue-400 transition-colors">
                     ویرایش
                   </button>
                   <button
-                      className="font-medium text-red-600 bg-red-300 px-3 py-2 rounded-md inline-block hover:bg-red-400 transition-colors">
+                    onClick={() => handleDeleteProduct(product.id)}
+                    className="font-medium text-red-600 bg-red-300 px-3 py-2 rounded-md inline-block hover:bg-red-400 transition-colors"
+                  >
                     حذف
                   </button>
                   <button
-                      className="font-medium text-black bg-gray-300 px-3 py-2 rounded-md
+                    className="font-medium text-black bg-gray-300 px-3 py-2 rounded-md
                    inline-block hover:bg-gray-400 transition-colors"
-                      onClick={() =>
-                          navigate(`/product/${product.id}/addGallery`)
-                      }
+                    onClick={() =>
+                      navigate(`/product/${product.id}/addGallery`)
+                    }
                   >
                     ایجاد عکس
                   </button>
                   <button
-                      onClick={() =>navigate(`/product/${product.id}/addColor`)}
-                      className="font-medium text-green-600 bg-green-300
-                      px-3 py-2 rounded-md inline-block hover:bg-green-400 transition-colors">
-                   افزودن رنگ
+                    onClick={() => navigate(`/product/${product.id}/addColor`)}
+                    className="font-medium text-green-600 bg-green-300
+                      px-3 py-2 rounded-md inline-block hover:bg-green-400 transition-colors"
+                  >
+                    افزودن رنگ
                   </button>
                 </td>
               </tr>

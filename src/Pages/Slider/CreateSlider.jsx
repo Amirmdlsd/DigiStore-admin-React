@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import axiosInstance from "../../axios/axiosInstance";
 
 function CreateSlider() {
+  const { id } = useParams();
+
   const navigate = useNavigate();
   const [status, setStatus] = useState({
     status: null,
@@ -20,6 +22,23 @@ function CreateSlider() {
       [event.target.name]: event.target.value,
     }));
   };
+
+  const handleGetdataForUpdate = async () => {
+    try {
+      const data = await axiosInstance.get(`sliders/${id}`);
+      setSlider({
+        url: data.data.data.url,
+        image: data.data.data.image,
+      });
+      console.log(data.data.data);
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
+  useEffect(() => {
+    id && handleGetdataForUpdate();
+  }, []);
 
   const handleOnSubmit = async (event) => {
     setLoading(true);
@@ -50,10 +69,22 @@ function CreateSlider() {
     }, 2000);
   };
 
+  const handleSubmitForUpdate = async (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("image", slider.image);
+    formData.append("url", slider.url);
+    const res = await axiosInstance.patch(`sliders/${id}`, formData);
+    console.log(res);
+    setStatus({ status: true, message: "با نوفقیت ویرایش شد" });
+  };
+
   return (
     <>
       <div className="flex justify-between w-[980px] items-center mx-auto mt-10">
-        <h1 className="text-xl font-bold">ایجاد اسلایدر</h1>
+        <h1 className="text-xl font-bold">
+          {id ? ",ویرایش اسلایدر" : "افزودن اسلایدر"}
+        </h1>
         <div className="flex bg-gray-100 border px-3 py-1 rounded-2xl">
           <button
             className="hover:text-white flex items-center hover:bg-blue-200 px-2 py-1 rounded"
@@ -80,7 +111,7 @@ function CreateSlider() {
 
       {/* Form */}
       <form
-        onSubmit={handleOnSubmit}
+        onSubmit={id ? handleSubmitForUpdate : handleOnSubmit}
         className="mx-auto mt-10 p-6 bg-white shadow-md rounded-lg w-[980px] h-[auto]"
         encType="multipart/form-data"
       >
@@ -134,6 +165,7 @@ function CreateSlider() {
             id="file"
             className="block w-full text-gray-700 py-2 px-3 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:border-blue-500 cursor-pointer"
           />
+          <img src={slider.image} />
         </div>
 
         {/* Submit Button */}

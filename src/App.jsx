@@ -27,6 +27,7 @@ function App() {
           <Route path="/" element={<div>hi</div>} />
           <Route path="/slider" element={<Slider />} />
           <Route path="/slider/add" element={<CreateSlider />} />
+          <Route path="/slider/:id" element={<CreateSlider />} />
           <Route path="/category" element={<Category />} />
           <Route path="/category/add" element={<AddCategory />} />
           <Route path="/product" element={<Product />} />

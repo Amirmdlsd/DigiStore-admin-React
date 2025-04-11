@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router";
 import axiosInstance from "../../axios/axiosInstance";
+import Swal from "sweetalert2";
+
 function Slider() {
   const sliderHeader = ["لینک", "عکس", "عملیات"];
   const [data, setData] = useState([]);
@@ -14,7 +16,16 @@ function Slider() {
       throw Error(error.message);
     }
   };
-
+  const deleteSlider = async (id) => {
+    try {
+      console.log(id);
+      const deleteSlider = await axiosInstance.delete(`sliders/${id}`);
+      console.log(deleteSlider);
+      handleSetData();
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
   useEffect(() => {
     handleSetData();
   }, []);
@@ -57,10 +68,29 @@ function Slider() {
                 </td>
 
                 <td className="py-4 px-6">
-                  <button className="font-medium text-blue-600 mr-3 rounded-md bg-blue-300 px-3 py-2 inline-block hover:bg-blue-400 transition-colors">
+                  <Link
+                    to={`/slider/${d.id}`}
+                    className="font-medium text-blue-600 mr-3  bg-blue-300 px-3 py-2 inline-block hover:bg-blue-400 transition-colors"
+                  >
                     ویرایش
-                  </button>
-                  <button className="font-medium text-red-600 bg-red-300 px-3 py-2 rounded-md inline-block hover:bg-red-400 transition-colors">
+                  </Link>
+                  <button
+                    onClick={() => {
+                      Swal.fire({
+                        title: "آیا میخواهید اسلایدر را حذف کنید",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, delete it!",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          deleteSlider(d.id);
+                        }
+                      });
+                    }}
+                    className="font-medium text-red-600 bg-red-300 px-3 py-2 rounded-md inline-block hover:bg-red-400 transition-colors"
+                  >
                     حذف
                   </button>
                 </td>
