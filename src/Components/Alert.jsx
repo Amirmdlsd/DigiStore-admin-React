@@ -10,7 +10,6 @@ export default function DeleteAlert({ title, func }) {
     confirmButtonText: "بله",
     cancelButtonText: "خیر",
   }).then((result) => {
-    func();
     if (result.isConfirmed) {
       func();
       Swal.fire({

@@ -8,7 +8,7 @@ const Category = () => {
     header: ["نام", "عکس", "عملیات"],
   };
   const [data, setData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
   const handleGetData = async () => {
     try {
@@ -22,7 +22,7 @@ const Category = () => {
   };
   useEffect(() => {
     handleGetData();
-  }, []);
+  }, [data]);
   return (
     <div className="overflow-x-auto relative shadow-md sm:rounded-lg mt-10 mx-10 text-center">
       {/* add */}

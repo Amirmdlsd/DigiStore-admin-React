@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../../axios/axiosInstance";
 import { Link, Navigate, useNavigate } from "react-router";
 import DeleteAlert from "../../Components/Alert";
+import Pagination from "../../Components/Pagination";
 
 function Product() {
   const productHeader = [
@@ -16,10 +17,11 @@ function Product() {
   ];
   const [products, setProducts] = useState([]);
   const [totlaPage, setTotalPage] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const handleSetProducts = async () => {
     try {
-      const data = await axiosInstance.get("/product");
+      const data = await axiosInstance.get(`product?page=${currentPage}&&limit=2`);
       setProducts(data.data.data.result);
       setTotalPage(data.data.data.totalPages);
       console.log(data.data);
@@ -35,7 +37,6 @@ function Product() {
       func: async () => {
         try {
           await axiosInstance.delete(`product/${id}`);
-          handleSetProducts();
         } catch (error) {
           throw new Error(error);
         }
@@ -44,7 +45,7 @@ function Product() {
   };
   useEffect(() => {
     handleSetProducts();
-  }, []);
+  }, [currentPage]);
 
   return (
     <div className="overflow-x-auto relative shadow-md sm:rounded-lg mt-10 mx-10 text-center">
@@ -77,11 +78,11 @@ function Product() {
           {products.map((product) => {
             return (
               <tr className="bg-white border-b hover:bg-gray-50 text-center">
-                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                  {product.title}
+                <td className=" py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                  {product.title.substring(0, 30)}
                 </td>
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                  {product.price}
+                  {product.price.toLocaleString("fa-IR")}
                 </td>
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                   {product.discount}
@@ -90,7 +91,7 @@ function Product() {
                   <img src={product.image} />
                 </td>
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                  {product.title}
+                  {product.category.title}
                 </td>
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                   {product.quantity}
@@ -136,6 +137,11 @@ function Product() {
           })}
         </tbody>
       </table>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totlaPage}
+        onPageChange={(page) => setCurrentPage(page)}
+      />
     </div>
   );
 }

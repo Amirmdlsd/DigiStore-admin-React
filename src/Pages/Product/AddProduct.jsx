@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../axios/axiosInstance";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 function AddProduct() {
   const navigate = useNavigate();
+  const { id } = useParams;
   const [product, setProduct] = useState({
     title: "",
     description: "",
@@ -12,15 +13,28 @@ function AddProduct() {
     discount: "",
     image: "",
     category_id: null,
+    brand_id: null,
   });
   const [error, setError] = useState({ status: null, message: "" });
   const [success, setSuccess] = useState({ status: null, message: "" });
   const [category, setCategory] = useState([]);
+  const [brands, setBrands] = useState([]);
 
   const handleSetCategory = async () => {
     try {
       const data = await axiosInstance.get("/category");
-      setCategory(data.data.data);
+      console.log(data);
+      setCategory(data.data.data.data);
+    } catch (error) {
+      setError({ status: true, message: "خطایی رخ داده است!" });
+      throw new Error(error);
+    }
+  };
+  const handleSetBrands = async () => {
+    try {
+      const data = await axiosInstance.get("/brand");
+      console.log(data);
+      setBrands(data.data.data.data);
     } catch (error) {
       setError({ status: true, message: "خطایی رخ داده است!" });
       throw new Error(error);
@@ -29,6 +43,7 @@ function AddProduct() {
 
   useEffect(() => {
     handleSetCategory();
+    handleSetBrands();
   }, []);
 
   const handleSetProduct = (event) => {
@@ -45,6 +60,7 @@ function AddProduct() {
       formData.append("title", product.title);
       formData.append("description", product.description);
       formData.append("category_id", Number(product.category_id));
+      formData.append("brand_id", product.brand_id);
       formData.append("image", product.image);
       formData.append("quantity", product.quantity);
       formData.append("discount", product.discount);
@@ -53,7 +69,6 @@ function AddProduct() {
       const data = await axiosInstance.post("/product", formData);
       setSuccess({ status: true, message: data.data.message });
       // setTimeout(() => navigate("/product"), 2000);
-
     } catch (error) {
       setError({
         status: true,
@@ -138,9 +153,10 @@ function AddProduct() {
             rows="4"
             placeholder="توضیحاتی برای محصول وارد کنید"
           />
+          دی
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
           <div>
             <label
               className="block text-sm font-bold text-gray-800 mb-2"
@@ -157,6 +173,27 @@ function AddProduct() {
               placeholder="تخفیف محصول"
             />
           </div>
+          <div>
+            <label
+              className="block text-sm font-bold text-gray-800 mb-2"
+              htmlFor="category_id"
+            >
+              برند
+            </label>
+            <select
+              name="brand_id"
+              onChange={handleSetProduct}
+              id="brand_id"
+              className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+            >
+              <option value="">انتخاب برند</option>
+              {brands.map((brand) => (
+                <option key={brand.id} value={brand.id}>
+                  {brand.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
           <div>
             <label
@@ -167,7 +204,12 @@ function AddProduct() {
             </label>
             <input
               name="price"
-              onChange={handleSetProduct}
+              onChange={(event) => {
+                setProduct((prev) => ({
+                  ...prev,
+                  price: event.target.value.toLocaleString("fa-IR"),
+                }));
+              }}
               type="text"
               id="price"
               className="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-1 focus:ring-blue-500 focus:outline-none"
